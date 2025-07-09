@@ -12,7 +12,7 @@ class Lokasi extends Model
 
     public function produk()
     {
-        return $this->belongsToMany(Produk::class, 'produk_lokasi')
+        return $this->belongsToMany(Produk::class, 'produk_lokasis')
             ->withPivot('stok', 'stok_minimal', 'updated_by')
             ->withTimestamps();
     }
