@@ -20,8 +20,9 @@ class ProdukLokasi extends Model
         return $this->belongsTo(Lokasi::class);
     }
 
-    public function mutasi()
+    // Relasi ke Mutasi (1 produk_lokasi bisa punya banyak mutasi)
+    public function mutasis()
     {
-        return $this->hasMany(Mutasi::class);
+        return $this->hasMany(Mutasi::class, 'produk_lokasi_id');
     }
 }
