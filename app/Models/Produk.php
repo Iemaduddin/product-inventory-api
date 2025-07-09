@@ -14,8 +14,12 @@ class Produk extends Model
     {
         return $this->belongsTo(KategoriProduk::class, 'kategori_id');
     }
+    public function produkLokasis()
+    {
+        return $this->hasMany(ProdukLokasi::class, 'produk_id');
+    }
     public function lokasi()
     {
-        return $this->belongsToMany(Lokasi::class, 'produk_lokasi')->withPivot('stok', 'stok_minimal', 'updated_by')->withTimestamps();
+        return $this->belongsToMany(Lokasi::class, 'produk_lokasis')->withPivot('stok', 'stok_minimal', 'updated_by')->withTimestamps();
     }
 }
