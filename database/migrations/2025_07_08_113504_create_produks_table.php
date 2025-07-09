@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('harga_satuan', 15, 2)->nullable();
             $table->timestamps();
 
-            $table->foreign('kategori_id')->references('id')->on('kategori_produk')->onDelete('cascade');
+            $table->foreign('kategori_id')->references('id')->on('kategori_produks')->onDelete('cascade');
         });
     }
 

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('kode_kategori')->unique();
             $table->string('deskripsi')->nullable();
             $table->timestamps();
-            $table->timestamps();
         });
     }
 

@@ -17,11 +17,11 @@ return new class extends Migration
             $table->uuid('lokasi_id');
             $table->integer('stok')->default(0);
             $table->integer('stok_minimal')->default(0);
-            $table->uuid('updated_by');
+            $table->uuid('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');
-            $table->foreign('lokasi_id')->references('id')->on('lokasi')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
+            $table->foreign('lokasi_id')->references('id')->on('lokasis')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
