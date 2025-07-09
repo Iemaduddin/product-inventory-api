@@ -1,61 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 Sistem Inventory Produk API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyek ini merupakan backend RESTful API berbasis Laravel 12 yang berfungsi untuk mengelola produk, lokasi penyimpanan, serta riwayat mutasi keluar/masuk stok produk. Dibangun menggunakan PHP 8.2, Laravel Sanctum untuk autentikasi, serta dapat dijalankan dengan Docker untuk memudahkan pengembangan dan deployment.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   ✅ Autentikasi menggunakan **Bearer Token (Sanctum)**
+-   ✅ Manajemen **User** & **Role-based Access Control**
+-   ✅ CRUD **Produk**, **Kategori Produk**, **Lokasi**
+-   ✅ Relasi many-to-many **Produk ↔ Lokasi** (dengan stok)
+-   ✅ Riwayat **Mutasi produk (masuk / keluar)** berdasarkan Produk & User
+-   ✅ Inisialisasi stok per produk/lokasi
+-   ✅ Docker-ready untuk local dev & server deploy
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   PHP 8.2 + Laravel 12
+-   Laravel Sanctum (auth)
+-   MySQL 8 (via Docker)
+-   phpMyAdmin (opsional)
+-   Docker & Docker Compose
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📄 Struktur Direktori Docker
 
-## Laravel Sponsors
+```bash
+.
+├── app/
+├── docker/
+│   └── vhost.conf         # Apache virtual host config
+├── Dockerfile             # Image Laravel + PHP 8.2 + Apache
+├── docker-compose.yml     # Service Laravel + MySQL + phpMyAdmin
+├── .env.docker            # Environment khusus Docker
+├── README.md
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🧑‍💻 Cara Menjalankan Secara Lokal
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Clone Repository
 
-## Contributing
+```bash
+git clone https://github.com/Iemaduddin/product-inventory-api.git
+cd product-inventory-api
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Jalankan Docker
 
-## Code of Conduct
+```bash
+docker compose up -d --build
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Masuk ke Container Laravel
 
-## Security Vulnerabilities
+```bash
+docker exec -it laravel-app bash
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Setup Laravel
 
-## License
+```bash
+cp .env.docker .env
+composer install
+php artisan key:generate
+php artisan migrate --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🌐 Akses Aplikasi
+
+| Layanan     | URL                   |
+| ----------- | --------------------- |
+| Laravel API | http://localhost:8000 |
+| phpMyAdmin  | http://localhost:8080 |
+
+---
+
+## 🔐 Login API
+
+Gunakan endpoint `/login` untuk mendapatkan Bearer Token, lalu kirim token tersebut di header:
+
+```http
+Authorization: Bearer <your-token>
+```
+
+---
+
+## 📘️ Dokumentasi API
+
+Seluruh endpoint REST API dapat dilihat & dicoba langsung melalui dokumentasi berikut:
+
+👉 [**Link Dokumentasi Postman**](https://orange-meadow-847678.postman.co/workspace/restful-api-2-p13~90d99b38-0f5d-4109-897f-ed0445b858f6/collection/27459823-1e24a14e-f908-42c7-ae73-6cc066f89c44?action=share&creator=27459823&active-environment=27459823-2cd4e2e9-9de8-4741-a73d-fe74f5dbeecf)
+
+---
+
+## ✨ Kontribusi
+
+Pull request terbuka untuk perbaikan atau fitur tambahan. Pastikan untuk membuat cabang dan deskripsikan perubahan yang kamu buat.
+
+---
+
+### 💫 Develope by :
+
+-   Nama: Iemaduddin
+-   Email: iemaduddin17@gmail.com
+-   Github:[@Iemaduddin](https://github.com/Iemaduddin)
